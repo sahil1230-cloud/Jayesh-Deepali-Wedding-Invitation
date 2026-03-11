@@ -222,11 +222,39 @@
     .day-header-badge { display: inline-block; background: var(--ivory); border: 1px solid rgba(166,140,196,0.35); padding: 6px 18px; position: relative; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.28em; color: var(--gold-dark); text-transform: uppercase; }
     @media (max-width: 540px) {
       .events-section { padding: 40px 18px; }
-      .event-timeline::before { left: 14px; transform: none; }
-      .ev-item { grid-template-columns: 28px 1fr; }
-      .ev-left { display: none; }
-      .ev-center { justify-content: center; }
-      .ev-right { padding-left: 14px; }
+
+      /* single column — dot on left, card on right, always */
+      .event-timeline::before { left: 13px; transform: none; }
+      .ev-item {
+        grid-template-columns: 28px 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 'dot card';
+        margin-bottom: 20px;
+      }
+      .ev-left {
+        display: block !important;          /* show left cards */
+        visibility: visible !important;
+        grid-area: card;                    /* put them in card slot */
+        text-align: left;
+        padding-right: 0;
+        padding-left: 14px;
+      }
+      .ev-right {
+        display: block !important;
+        visibility: visible !important;
+        grid-area: card;
+        padding-left: 14px;
+      }
+      /* hide the invisible spacer divs on mobile */
+      .ev-left[style*="visibility:hidden"],
+      .ev-right[style*="visibility:hidden"] { display: none !important; }
+      .ev-center {
+        grid-area: dot;
+        justify-content: center;
+        align-self: start;
+        padding-top: 16px;
+      }
+      .day-header { margin: 28px 0 18px; }
       .nav-link { font-size: 0.46rem; padding: 11px 7px; letter-spacing: 0.12em; }
     }
 
